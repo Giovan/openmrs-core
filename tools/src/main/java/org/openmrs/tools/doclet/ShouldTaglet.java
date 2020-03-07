@@ -9,15 +9,22 @@
  */
 package org.openmrs.tools.doclet;
 
-import java.util.Map;
+// import com.sun.javadoc.Tag;
+// import com.sun.tools.doclets.Taglet;
 
-import com.sun.javadoc.Tag;
-import com.sun.tools.doclets.Taglet;
+import com.sun.source.doctree.DocTree;
+import jdk.javadoc.doclet.Taglet;
+
+import javax.lang.model.element.Element;
+import javax.swing.text.html.HTML;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Taglet for @should annotations.
  */
-public class ShouldTaglet implements Taglet {
+public abstract class ShouldTaglet implements Taglet {
 	
 	private static final String NAME = "should";
 	
@@ -37,7 +44,7 @@ public class ShouldTaglet implements Taglet {
 	 * @return false since <code> @should</code> can be used in field documentation and true
 	 *         otherwise.
 	 */
-	@Override
+	// @Override
 	public boolean inField() {
 		return false;
 	}
@@ -48,7 +55,7 @@ public class ShouldTaglet implements Taglet {
 	 * @return true since <code> @should</code> can be used in constructor documentation and false
 	 *         otherwise.
 	 */
-	@Override
+	// @Override
 	public boolean inConstructor() {
 		return true;
 	}
@@ -59,7 +66,7 @@ public class ShouldTaglet implements Taglet {
 	 * @return true since <code> @should</code> can be used in method documentation and false
 	 *         otherwise.
 	 */
-	@Override
+	// @Override
 	public boolean inMethod() {
 		return true;
 	}
@@ -70,7 +77,7 @@ public class ShouldTaglet implements Taglet {
 	 * @return true since <code> @should</code> can be used in overview documentation and false
 	 *         otherwise.
 	 */
-	@Override
+	// @Override
 	public boolean inOverview() {
 		return true;
 	}
@@ -81,7 +88,7 @@ public class ShouldTaglet implements Taglet {
 	 * @return false since <code> @should</code> cannot be used in package documentation and true
 	 *         otherwise.
 	 */
-	@Override
+	// @Override
 	public boolean inPackage() {
 		return false;
 	}
@@ -93,7 +100,7 @@ public class ShouldTaglet implements Taglet {
 	 * @return true since <code> @should</code> can be used in type documentation and false
 	 *         otherwise.
 	 */
-	@Override
+	// @Override
 	public boolean inType() {
 		return true;
 	}
@@ -115,7 +122,17 @@ public class ShouldTaglet implements Taglet {
 	 * @param tagletMap the map to register this tag to.
 	 */
 	public static void register(Map tagletMap) {
-		ShouldTaglet tag = new ShouldTaglet();
+		ShouldTaglet tag = new ShouldTaglet() {
+			@Override
+			public Set<Location> getAllowedLocations() {
+				return null;
+			}
+
+			@Override
+			public String toString(List<? extends DocTree> tags, Element element) {
+				return null;
+			}
+		};
 		Taglet t = (Taglet) tagletMap.get(tag.getName());
 		if (t != null) {
 			tagletMap.remove(tag.getName());
@@ -129,9 +146,10 @@ public class ShouldTaglet implements Taglet {
 	 * 
 	 * @param tag the <code>Tag</code> representation of this custom tag.
 	 */
-	@Override
-	public String toString(Tag tag) {
-		return "\n<DT><B>" + HEADER + "</B></DT>\n  <DD>Should " + tag.text() + "</DD>";
+	// @Override
+	public String toString(HTML.Tag tag) {
+		// return "\n<DT><B>" + HEADER + "</B></DT>\n  <DD>Should " + tag.text() + "</DD>";
+		return "\n<DT><B>" + HEADER + "</B></DT>\n  <DD>Should " + "</DD>";
 	}
 	
 	/**
@@ -140,14 +158,14 @@ public class ShouldTaglet implements Taglet {
 	 * 
 	 * @param tags the array of <code>Tag</code>s representing of this custom tag.
 	 */
-	@Override
-	public String toString(Tag[] tags) {
+	// @Override
+	public String toString(HTML.Tag[] tags) {
 		if (tags.length == 0) {
 			return null;
 		}
 		StringBuilder result = new StringBuilder("\n<DT><B>").append(HEADER).append("</B></DT>");
-		for (Tag tag : tags) {
-			result.append("\n  <DD>Should ").append(tag.text()).append("</DD>");
+		for (HTML.Tag tag : tags) {
+			// result.append("\n  <DD>Should ").append(tag.text()).append("</DD>");
 		}
 		return result.toString();
 	}

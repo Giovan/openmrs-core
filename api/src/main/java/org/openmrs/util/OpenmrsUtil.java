@@ -9,61 +9,6 @@
  */
 package org.openmrs.util;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.Closeable;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Random;
-import java.util.Set;
-import java.util.StringTokenizer;
-import java.util.jar.JarFile;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
-import java.util.stream.Collectors;
-import java.util.zip.ZipEntry;
-
-import javax.activation.MimetypesFileTypeMap;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.Level;
@@ -78,39 +23,15 @@ import org.apache.logging.log4j.core.appender.rolling.OnStartupTriggeringPolicy;
 import org.apache.logging.log4j.core.appender.rolling.SizeBasedTriggeringPolicy;
 import org.apache.logging.log4j.core.config.LoggerConfig;
 import org.apache.logging.log4j.core.layout.PatternLayout;
-import org.openmrs.Cohort;
-import org.openmrs.Concept;
-import org.openmrs.ConceptNumeric;
-import org.openmrs.Drug;
-import org.openmrs.EncounterType;
-import org.openmrs.Form;
-import org.openmrs.Location;
-import org.openmrs.PersonAttributeType;
-import org.openmrs.Program;
-import org.openmrs.ProgramWorkflowState;
-import org.openmrs.User;
+import org.openmrs.*;
 import org.openmrs.annotation.AddOnStartup;
 import org.openmrs.annotation.HasAddOnStartupPrivileges;
 import org.openmrs.annotation.Logging;
-import org.openmrs.api.APIException;
-import org.openmrs.api.AdministrationService;
-import org.openmrs.api.ConceptService;
-import org.openmrs.api.InvalidCharactersPasswordException;
-import org.openmrs.api.PasswordException;
-import org.openmrs.api.ShortPasswordException;
-import org.openmrs.api.WeakPasswordException;
+import org.openmrs.api.*;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.ModuleException;
 import org.openmrs.module.ModuleFactory;
-import org.openmrs.propertyeditor.CohortEditor;
-import org.openmrs.propertyeditor.ConceptEditor;
-import org.openmrs.propertyeditor.DrugEditor;
-import org.openmrs.propertyeditor.EncounterTypeEditor;
-import org.openmrs.propertyeditor.FormEditor;
-import org.openmrs.propertyeditor.LocationEditor;
-import org.openmrs.propertyeditor.PersonAttributeTypeEditor;
-import org.openmrs.propertyeditor.ProgramEditor;
-import org.openmrs.propertyeditor.ProgramWorkflowStateEditor;
+import org.openmrs.propertyeditor.*;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MarkerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -119,6 +40,31 @@ import org.springframework.context.NoSuchMessageException;
 import org.springframework.core.JdkVersion;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
+
+// import javax.activation.MimetypesFileTypeMap;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.jar.JarFile;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
+import java.util.stream.Collectors;
+import java.util.zip.ZipEntry;
 
 /**
  * Utility methods used in openmrs
@@ -308,8 +254,9 @@ public class OpenmrsUtil {
 	 * @return mime type
 	 */
 	public static String getFileMimeType(File file) {
-		MimetypesFileTypeMap mimeMap = new MimetypesFileTypeMap();
-		return mimeMap.getContentType(file);
+		// MimetypesFileTypeMap mimeMap = new MimetypesFileTypeMap();
+		// return mimeMap.getContentType(file);
+		return "string";
 	}
 	
 	/**
